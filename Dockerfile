@@ -1,3 +1,4 @@
+
 # tesseract 미리 설치된 베이스 이미지 사용
 FROM yeonju52/my-tesseract-app:latest
 
@@ -11,4 +12,4 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # 기본 실행 명령
-CMD ["python", "main.py"]
+CMD ["python", "app.py"]
