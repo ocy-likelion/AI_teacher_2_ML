@@ -25,7 +25,7 @@ def generate_explanation_and_concepts(problem_text):
             {"role": "system", "content": "You are an educational expert who returns structured JSON for math concepts."},
             {"role": "user", "content": concept_prompt}
         ],
-        max_tokens=1000,
+        max_tokens=200,
         temperature=0.5
     )
     concept_raw = concept_response.choices[0].message.content.strip()
