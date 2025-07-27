@@ -1,13 +1,24 @@
 from PIL import Image
 import pytesseract
-import io
 from typing import BinaryIO
+import gc
+
+MAX_IMAGE_DIMENSION = 2000
 
 def ocr_image_to_text(image_file: BinaryIO) -> str:
-    image = Image.open(image_file)
-    
-    text = pytesseract.image_to_string(image, lang='kor+eng+equ')
-    return text.strip()
+    text_result = ""
+    try:
+        with Image.open(image_file) as image:
+            image = image.convert('L')
+
+            if image.width > MAX_IMAGE_DIMENSION or image.height > MAX_IMAGE_DIMENSION:
+                image.thumbnail((MAX_IMAGE_DIMENSION, MAX_IMAGE_DIMENSION), Image.Resampling.LANCZOS)
+
+            tesseract_config = r'--dpi 300'
+            text_result = pytesseract.image_to_string(image, lang='kor+eng+equ', config=tesseract_config)
+    finally:
+        gc.collect()
+    return text_result.strip()
 
 if __name__ == "__main__":
     import os
