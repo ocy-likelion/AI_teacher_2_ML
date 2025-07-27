@@ -23,6 +23,7 @@ def math_explain():
     try:
         explanation_model = generate_ai_response(problem_text)
         result = explanation_model.model_dump()
+        result['ocr_result'] = problem_text
         current_app.logger.info("AI response generated successfully.")
     except Exception as e:
         current_app.logger.error(f"AI processing failed: {e}", exc_info=True)
