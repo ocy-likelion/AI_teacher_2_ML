@@ -1,0 +1,20 @@
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y \
+  wget \
+  tesseract-ocr \
+  tesseract-ocr-kor \
+  tesseract-ocr-eng \
+  libtesseract-dev \
+  libleptonica-dev && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ENV TESSDATA_PREFIX=/usr/share/tesseract-ocr/5/tessdata/
+
+RUN wget https://github.com/tesseract-ocr/tessdata_best/raw/main/equ.traineddata \
+    -O /usr/share/tesseract-ocr/5/tessdata/equ.traineddata
+
+COPY requirements.txt /app/
+WORKDIR /app
+
+RUN pip install --no-cache-dir -r requirements.txt
