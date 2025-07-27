@@ -4,13 +4,9 @@ import io
 from typing import BinaryIO
 
 def ocr_image_to_text(image_file: BinaryIO) -> str:
-    image_bytes = image_file.read()
-    image = Image.open(io.BytesIO(image_bytes))
+    image = Image.open(image_file)
     
     text = pytesseract.image_to_string(image, lang='kor+eng+equ')
-    
-    image_file.seek(0)
-    
     return text.strip()
 
 if __name__ == "__main__":
