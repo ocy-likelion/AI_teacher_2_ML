@@ -1,8 +1,9 @@
 from PIL import Image
 import pytesseract
 import io
+from typing import BinaryIO
 
-def ocr_image_to_text(image_file):
+def ocr_image_to_text(image_file: BinaryIO) -> str:
     image_bytes = image_file.read()
     image = Image.open(io.BytesIO(image_bytes))
     
@@ -14,7 +15,7 @@ def ocr_image_to_text(image_file):
 
 if __name__ == "__main__":
     import os
-    sample_path = os.path.join("resources", "M1_1_01_6915_3603.png")
+    sample_path = os.path.join("resources", "sample/M1_1_01_6915_3603.png")
     if os.path.exists(sample_path):
         with open(sample_path, "rb") as f:
             result = ocr_image_to_text(f)
